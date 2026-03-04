@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision AI Tutor</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+  <aside class="gemini-sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <button class="new-chat-btn" onclick="createNewChat()">
+        <i class="fa-solid fa-plus"></i> <span>New Chat</span>
+      </button>
+    </div>
+    
+    <div class="sidebar-scroll">
+      <div class="sidebar-group">
+        <label>Active Logic Layers</label>
+        <div id="subject-map" class="map-grid">
+          <p class="empty-text" style="color:#666; font-size:0.9rem;">Sync Vision Brain to view data...</p>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid #333; margin: 20px 0;">
+
+      <div class="sidebar-group">
+        <label>Deep Memory Search</label>
+        <input type="text" id="memory-search" placeholder="Search past year..." onkeyup="searchMemory()" style="width: 100%; box-sizing: border-box; background: #131314; border: 1px solid #333; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-family: 'Inter', sans-serif; outline: none;">
+        
+        <div id="chat-history" class="history-list">
+          </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="chat-surface">
+    <header class="chat-header">
+      <div class="header-left">
+        <button class="utility-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars-staggered"></i></button>
+        <div class="action-row">
+          <button class="utility-btn" title="Study Mode"><i class="fa-solid fa-book-open-reader"></i></button>
+          <button class="utility-btn" title="Layer Comparison"><i class="fa-solid fa-layer-group"></i></button>
+        </div>
+        <span class="logo-type">Vision</span>
+      </div>
+      
+      <div class="age-selector">
+        <button class="age-pill" onclick="setMode('Elementary')">Elem</button>
+        <button class="age-pill" onclick="setMode('Middle School')">Mid</button>
+        <button class="age-pill active" onclick="setMode('High School')">High</button>
+        <button class="age-pill" onclick="setMode('College')">College</button>
+      </div>
+    </header>
+
+    <div class="chat-scroll-area">
+      <div class="welcome-hero" id="hero-text">
+        <h2 class="gradient-text">Hello, I'm Vision.</h2>
+      </div>
+
+      <div class="response-stream">
+        <div id="tutor-output" class="ai-bubble">
+          I'm your Vision Tutor. To begin, sync your knowledge base using the <i class="fa-solid fa-brain inline-icon"></i> icon, or share a photo <i class="fa-solid fa-camera inline-icon"></i> of your notes for a quick logic breakdown.
+        </div>
+        
+        <div id="preview-box" class="image-preview-area hidden">
+           <div class="ocr-scanner" id="ocr-status">OCR Engine Ready...</div>
+           <img id="image-preview" src="" alt="Scan Preview">
+        </div>
+      </div>
+    </div>
+
+    <footer class="input-anchor">
+      <div class="input-pill">
+        <div class="input-left">
+          <label for="image-upload" class="circle-btn" title="Upload Image">
+            <i class="fa-solid fa-image"></i>
+          </label>
+          <input type="file" id="image-upload" accept="image/*" hidden onchange="handleImageUpload(event)">
+          <button class="circle-btn" onclick="openCamera()" title="Open Camera"><i class="fa-solid fa-camera"></i></button>
+        </div>
+
+        <input type="text" id="user-query" placeholder="Ask Vision..." onkeypress="if(event.key === 'Enter') runSearch()">
+
+        <div class="input-right">
+          <label for="json-upload" class="circle-btn" title="Sync Vision Brain">
+            <i class="fa-solid fa-brain"></i>
+          </label>
+          <input type="file" id="json-upload" accept=".json" hidden onchange="loadDatabase(event)">
+          <button onclick="runSearch()" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
