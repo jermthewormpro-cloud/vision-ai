@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vision AI Tutor</title>
   
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4285f4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/610/610413.png">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   
@@ -34,8 +40,7 @@
         <label>Deep Memory Search</label>
         <input type="text" id="memory-search" placeholder="Search past year..." onkeyup="searchMemory()" style="width: 100%; box-sizing: border-box; background: #131314; border: 1px solid #333; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-family: 'Inter', sans-serif; outline: none;">
         
-        <div id="chat-history" class="history-list">
-          </div>
+        <div id="chat-history" class="history-list"></div>
       </div>
     </div>
   </aside>
@@ -101,5 +106,16 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Vision Service Worker Active'))
+        .catch(err => console.log('Service Worker Error', err));
+    });
+  }
+</script>
+
 </body>
 </html>
